@@ -1,0 +1,30 @@
+[project]
+name = "restate-pydantic"
+version = "0.1.0"
+description = "Pydantic AI agents with Restate for durable execution"
+readme = "README.md"
+requires-python = ">=3.13.7"
+dependencies = [
+    "devtools>=0.12.2",
+    "httpx>=0.28.1",
+    "hypercorn>=0.17.3",
+    "logfire>=4.13.2",
+    "pydantic>=2.12.0",
+    "pydantic-ai>=1.0.18",
+    "python-dotenv>=1.1.1",
+    "restate-sdk[serde]>=0.10.2",
+    "tavily-python>=0.7.12",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.2",
+    "ruff>=0.14.0",
+    "taskipy>=1.14.1",
+    "ty>=0.0.1a22",
+]
+
+[tool.taskipy.tasks]
+check = "uv run ty check"
+lint = "uv run ruff check"
+test = "uv run pytest"

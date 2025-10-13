@@ -1,0 +1,38 @@
+services:
+  app:
+    build: .
+    ports:
+      - "9080:9080"
+    env_file:
+      - .env
+    networks:
+      - restate-network
+
+  restate:
+    image: docker.restate.dev/restatedev/restate:latest
+    ports:
+      - "8080:8080"
+      - "9070:9070"
+      - "9071:9071"
+    depends_on:
+      - app
+    networks:
+      - restate-network
+
+  restate-register:
+    image: docker.restate.dev/restatedev/restate-cli:latest
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        sleep 10
+        export RESTATE_ADMIN_URL=http://restate:9070
+        /restate deployments register --yes http://app:9080
+    depends_on:
+      - app
+      - restate
+    networks:
+      - restate-network
+    restart: "no"
+
+networks:
+  restate-network:
