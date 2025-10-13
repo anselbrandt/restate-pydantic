@@ -28,8 +28,33 @@ TAVILY_API_KEY=
 uv sync
 ```
 
-### Docker
+### Docker Compose
 
 ```bash
 docker compose up --build
+```
+
+## Manually container orchestration
+
+```bash
+docker build -t restate-pydantic .
+
+docker run -p 9080:9080 --env-file .env restate-pydantic
+```
+
+### Start Restate Server
+
+```bash
+docker run --name restate_dev --rm \
+-p 8080:8080 -p 9070:9070 -p 9071:9071 \
+--add-host=host.docker.internal:host-gateway \
+docker.restate.dev/restatedev/restate:latest
+```
+
+### Register Services
+
+```bash
+docker run -it --network=host \
+docker.restate.dev/restatedev/restate-cli:latest \
+deployments register host.docker.internal:9080 --yes
 ```
