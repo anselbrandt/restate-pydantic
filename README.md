@@ -2,7 +2,7 @@
 
 ### Based on [[WIP]: Add Restate Durable Execution#2998](https://github.com/pydantic/pydantic-ai/pull/2998/commits)
 
-## Running the examples
+### API Keys
 
 Create a `.env` file in the root folder with your OpenAI API key as an environment variable:
 
