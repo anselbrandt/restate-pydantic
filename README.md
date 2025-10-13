@@ -34,7 +34,7 @@ uv sync
 docker compose up --build
 ```
 
-## Manually container orchestration
+## Manual container orchestration
 
 ```bash
 docker build -t restate-pydantic .
