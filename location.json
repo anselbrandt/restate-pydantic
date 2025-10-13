@@ -1,0 +1,260 @@
+{
+  "type": "FeatureCollection",
+  "query": [
+    "tokyo"
+  ],
+  "features": [
+    {
+      "id": "region.320628",
+      "type": "Feature",
+      "place_type": [
+        "region"
+      ],
+      "relevance": 1,
+      "properties": {
+        "mapbox_id": "dXJuOm1ieHBsYzpCT1Iw",
+        "wikidata": "Q1490",
+        "short_code": "JP-13"
+      },
+      "text": "Tokyo Prefecture",
+      "place_name": "Tokyo Prefecture, Japan",
+      "matching_text": "Tokyo",
+      "matching_place_name": "Tokyo, Japan",
+      "bbox": [
+        138.942911,
+        24.152347,
+        154.085786,
+        35.898159
+      ],
+      "center": [
+        139.692526,
+        35.68882
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.692526,
+          35.68882
+        ]
+      },
+      "context": [
+        {
+          "id": "country.8820",
+          "mapbox_id": "dXJuOm1ieHBsYzpJblE",
+          "wikidata": "Q17",
+          "short_code": "jp",
+          "text": "Japan"
+        }
+      ]
+    },
+    {
+      "id": "locality.12585650",
+      "type": "Feature",
+      "place_type": [
+        "locality"
+      ],
+      "relevance": 1,
+      "properties": {
+        "mapbox_id": "dXJuOm1ieHBsYzp3QXF5"
+      },
+      "text": "Tokyo",
+      "place_name": "Tokyo, Hela, Papua New Guinea",
+      "center": [
+        142.838161,
+        -5.796878
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          142.838161,
+          -5.796878
+        ]
+      },
+      "context": [
+        {
+          "id": "region.9394",
+          "mapbox_id": "dXJuOm1ieHBsYzpKTEk",
+          "wikidata": "Q1382499",
+          "short_code": "PG-HLA",
+          "text": "Hela"
+        },
+        {
+          "id": "country.8882",
+          "mapbox_id": "dXJuOm1ieHBsYzpJckk",
+          "wikidata": "Q691",
+          "short_code": "pg",
+          "text": "Papua New Guinea"
+        }
+      ]
+    },
+    {
+      "id": "address.3440244971890820",
+      "type": "Feature",
+      "place_type": [
+        "address"
+      ],
+      "relevance": 1,
+      "properties": {
+        "accuracy": "street",
+        "override:postcode": "",
+        "mapbox_id": "dXJuOm1ieGFkci1zdHI6YmMzYmZmYzAtZDNmZS00ZTdlLWE5ZjMtMTZjNTczNjBlYmY2"
+      },
+      "text": "Rue Tokyo \u0632\u0646\u0642\u0629 \u0637\u0648\u0643\u064a\u0648",
+      "place_name": "Rue Tokyo \u0632\u0646\u0642\u0629 \u0637\u0648\u0643\u064a\u0648, 10 Rabat, Morocco",
+      "center": [
+        -6.847,
+        34.026156
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.847,
+          34.026156
+        ]
+      },
+      "context": [
+        {
+          "id": "postcode.11915",
+          "mapbox_id": "dXJuOm1ieHBsYzpMb3M",
+          "text": "10"
+        },
+        {
+          "id": "locality.4950667",
+          "mapbox_id": "dXJuOm1ieHBsYzpTNHFM",
+          "wikidata": "Q3128108",
+          "text": "\u062d\u0633\u0627\u0646"
+        },
+        {
+          "id": "place.8439947",
+          "mapbox_id": "dXJuOm1ieHBsYzpnTWlM",
+          "wikidata": "Q3551",
+          "text": "Rabat"
+        },
+        {
+          "id": "region.58507",
+          "mapbox_id": "dXJuOm1ieHBsYzo1SXM",
+          "wikidata": "Q19951239",
+          "short_code": "MA-04",
+          "text": "Rabat-Sal\u00e9-K\u00e9nitra"
+        },
+        {
+          "id": "country.8843",
+          "mapbox_id": "dXJuOm1ieHBsYzpJb3M",
+          "wikidata": "Q1028",
+          "short_code": "ma",
+          "text": "Morocco"
+        }
+      ]
+    },
+    {
+      "id": "address.662765190037590",
+      "type": "Feature",
+      "place_type": [
+        "address"
+      ],
+      "relevance": 1,
+      "properties": {
+        "accuracy": "street"
+      },
+      "text": "Strada Tokyo",
+      "place_name": "Strada Tokyo, Bude\u0219ti 4814, Moldova",
+      "matching_text": "Tokyo Street",
+      "matching_place_name": "Tokyo Street, Bude\u0219ti 4814, Moldova",
+      "center": [
+        29.011282,
+        47.068557
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          29.011282,
+          47.068557
+        ]
+      },
+      "context": [
+        {
+          "id": "postcode.4607629",
+          "mapbox_id": "dXJuOm1ieHBsYzpSazZO",
+          "text": "4814"
+        },
+        {
+          "id": "place.911501",
+          "mapbox_id": "dXJuOm1ieHBsYzpEZWlO",
+          "wikidata": "Q2388079",
+          "text": "Bude\u0219ti"
+        },
+        {
+          "id": "region.66701",
+          "mapbox_id": "dXJuOm1ieHBsYzpBUVNO",
+          "wikidata": "Q21197",
+          "short_code": "MD-CU",
+          "text": "Chi\u0219in\u0103u"
+        },
+        {
+          "id": "country.8845",
+          "mapbox_id": "dXJuOm1ieHBsYzpJbzA",
+          "wikidata": "Q217",
+          "short_code": "md",
+          "text": "Moldova"
+        }
+      ]
+    },
+    {
+      "id": "address.6473347216572056",
+      "type": "Feature",
+      "place_type": [
+        "address"
+      ],
+      "relevance": 1,
+      "properties": {
+        "accuracy": "street",
+        "mapbox_id": "dXJuOm1ieGFkci1zdHI6MDMzOTM3MDgtNDk5ZS00OWZkLWI0YTEtYjUyMTZiNTcyYjZj"
+      },
+      "text": "Tokyostraat",
+      "place_name": "Tokyostraat, 3404 DW IJsselstein, Netherlands",
+      "center": [
+        5.032736,
+        52.00839
+      ],
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          5.032736,
+          52.00839
+        ]
+      },
+      "context": [
+        {
+          "id": "neighborhood.19352744",
+          "mapbox_id": "dXJuOm1ieHBsYzpBU2RNcUE",
+          "text": "De Wereldsteden"
+        },
+        {
+          "id": "postcode.6473347216572056",
+          "text": "3404 DW"
+        },
+        {
+          "id": "place.7948456",
+          "mapbox_id": "dXJuOm1ieHBsYzplVWlv",
+          "wikidata": "Q10045",
+          "text": "IJsselstein"
+        },
+        {
+          "id": "region.99496",
+          "mapbox_id": "dXJuOm1ieHBsYzpBWVNv",
+          "wikidata": "Q776",
+          "short_code": "NL-UT",
+          "text": "Utrecht"
+        },
+        {
+          "id": "country.8872",
+          "mapbox_id": "dXJuOm1ieHBsYzpJcWc",
+          "wikidata": "Q55",
+          "short_code": "nl",
+          "text": "Netherlands"
+        }
+      ]
+    }
+  ],
+  "attribution": "NOTICE: \u00a9 2025 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service (https://www.mapbox.com/about/maps/). This response and the information it contains may not be retained."
+}

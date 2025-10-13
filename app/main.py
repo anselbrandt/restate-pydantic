@@ -6,10 +6,13 @@ import restate
 
 from app.chaining import call_chaining_svc
 from app.weather import weather_service
+from app.weather_advanced import weather_service_advanced
 
 load_dotenv()
 
-app = restate.app(services=[call_chaining_svc, weather_service])
+app = restate.app(
+    services=[call_chaining_svc, weather_service, weather_service_advanced]
+)
 
 if __name__ == "__main__":
     conf = hypercorn.Config()
