@@ -1,16 +1,14 @@
-import restate
-from pydantic_ai import Agent
 from pydantic import BaseModel
+from pydantic_ai import Agent
 from restate import RunOptions
+import restate
 
-from app.restate import RestateAgent
 from app.data.example_prompt import example_prompt
+from app.restate import RestateAgent
+from app.schemas.lead_generator import LinkedInLeadQueries
 from app.system_prompts.lead_generator import (
     structured_instructions,
     unstructured_instructions,
-)
-from app.schemas.lead_generator import (
-    LinkedInLeadQueries,
 )
 
 lead_generator_service = restate.Service("Lead_Generator_Service")
