@@ -36,16 +36,18 @@ async def run_lead_generator(ctx: restate.Context, prompt: Prompt) -> str:
         result = await unstructured_restate_agent.run(prompt_text)
         return result.output
 
-    structured_leads_agent = Agent(
+    structured_leads_agent = Agent[None, LinkedInLeadQueries](
         "openai:gpt-4.1-mini",
         instructions=structured_instructions,
         output_type=LinkedInLeadQueries,
         retries=3,
     )
 
-    structured_restate_agent = RestateAgent(structured_leads_agent, restate_context=ctx)
+    structured_restate_agent: RestateAgent[None, LinkedInLeadQueries] = RestateAgent(
+        structured_leads_agent, restate_context=ctx
+    )
 
-    async def structured_leads_agent_call(prompt_text: str) -> str:
+    async def structured_leads_agent_call(prompt_text: str) -> LinkedInLeadQueries:
         result = await structured_restate_agent.run(prompt_text)
         return result.output
 
@@ -59,8 +61,8 @@ async def run_lead_generator(ctx: restate.Context, prompt: Prompt) -> str:
     structured_result = await ctx.run_typed(
         "Structured leads generator",
         structured_leads_agent_call,
-        RunOptions(max_attempts=3),
+        RunOptions(max_attempts=3, type_hint=LinkedInLeadQueries),
         prompt_text=f"Structure these LinkedIn search queries for automated lead generation: {unstructured_output}",
     )
 
-    return structured_result
+    return structured_result.model_dump_json()
