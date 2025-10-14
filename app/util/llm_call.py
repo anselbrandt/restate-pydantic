@@ -34,10 +34,11 @@ def llm_call(
         raise TerminalError("Either prompt or messages must be provided.")
 
     agent = Agent(model="openai:gpt-4o", system_prompt=system)
+    toolsets = [FunctionToolset(tools=list(tools))] if tools else []
     result = agent.run_sync(
         user_prompt=prompt,
         message_history=messages,
-        toolsets=[FunctionToolset(tools=tools)],
+        toolsets=toolsets,
     )
 
     if result.output:

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from collections.abc import Iterator, Sequence
 from contextlib import contextmanager
-from typing import Any, Never, overload
+from typing import Any, Never, cast, overload
 
 from restate import Context, TerminalError
 
@@ -88,7 +88,10 @@ class RestateAgent(WrapperAgent[AgentDepsT, OutputDataT]):
         ) -> AbstractToolset[AgentDepsT]:
             """Set the Restate context for the toolset, wrapping tools if needed."""
             if isinstance(toolset, FunctionToolset) and not disable_auto_wrapping_tools:
-                return RestateContextRunToolset(toolset, restate_context)
+                return cast(
+                    AbstractToolset[AgentDepsT],
+                    RestateContextRunToolset(toolset, restate_context),
+                )
             try:
                 from pydantic_ai.mcp import MCPServer
 
@@ -97,7 +100,10 @@ class RestateAgent(WrapperAgent[AgentDepsT, OutputDataT]):
                 pass
             else:
                 if isinstance(toolset, MCPServer):
-                    return RestateMCPServer(toolset, restate_context)
+                    return cast(
+                        AbstractToolset[AgentDepsT],
+                        RestateMCPServer(toolset, restate_context),
+                    )
 
             return toolset
 
@@ -122,7 +128,7 @@ class RestateAgent(WrapperAgent[AgentDepsT, OutputDataT]):
         message_history: list[ModelMessage] | None = None,
         deferred_tool_results: DeferredToolResults | None = None,
         model: models.Model | models.KnownModelName | str | None = None,
-        deps: AgentDepsT = None,
+        deps: AgentDepsT | None = None,
         model_settings: ModelSettings | None = None,
         usage_limits: UsageLimits | None = None,
         usage: RunUsage | None = None,
@@ -140,7 +146,7 @@ class RestateAgent(WrapperAgent[AgentDepsT, OutputDataT]):
         message_history: list[ModelMessage] | None = None,
         deferred_tool_results: DeferredToolResults | None = None,
         model: models.Model | models.KnownModelName | str | None = None,
-        deps: AgentDepsT = None,
+        deps: AgentDepsT | None = None,
         model_settings: ModelSettings | None = None,
         usage_limits: UsageLimits | None = None,
         usage: RunUsage | None = None,
@@ -157,7 +163,7 @@ class RestateAgent(WrapperAgent[AgentDepsT, OutputDataT]):
         message_history: list[ModelMessage] | None = None,
         deferred_tool_results: DeferredToolResults | None = None,
         model: models.Model | models.KnownModelName | str | None = None,
-        deps: AgentDepsT = None,
+        deps: AgentDepsT | None = None,
         model_settings: ModelSettings | None = None,
         usage_limits: UsageLimits | None = None,
         usage: RunUsage | None = None,
