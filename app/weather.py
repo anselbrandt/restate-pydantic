@@ -121,7 +121,7 @@ async def get_weather(ctx: RunContext[Deps], lat: float, lng: float) -> dict[str
     }
 
 
-weather_service = Service(name="weather")
+weather_service = Service(name="Weather_Service")
 
 example_city_or_cities = "Tokyo and Los Angeles"
 

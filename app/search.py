@@ -92,7 +92,7 @@ async def tavily_search(ctx: RunContext[Deps], query: str) -> dict:
     )
 
 
-search_service = restate.Service(name="search_service")
+search_service = restate.Service(name="Search_Service")
 
 example_prompt = "Give me the box scores for all Major League baseball games yesterday and give me links to each game."
 

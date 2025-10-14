@@ -13,7 +13,7 @@ If any step fails, Restate automatically resumes from that exact point.
 Input → Analysis → Extraction → Summary → Result
 """
 
-call_chaining_svc = restate.Service("CallChainingService")
+call_chaining_svc = restate.Service("Call_Chaining_Service")
 
 example_prompt = """Q3 Performance Summary:
 Our customer satisfaction score rose to 92 points this quarter.
@@ -27,7 +27,7 @@ class Prompt(BaseModel):
 
 
 @call_chaining_svc.handler()
-async def run(ctx: restate.Context, prompt: Prompt) -> str:
+async def run_call_chaining(ctx: restate.Context, prompt: Prompt) -> str:
     """Chains multiple LLM calls sequentially, where each step processes the previous step's output."""
 
     # Step 1: Process the initial input with the first prompt

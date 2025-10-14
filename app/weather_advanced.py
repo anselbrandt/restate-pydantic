@@ -135,7 +135,7 @@ async def get_weather(ctx: RunContext[Deps], lat: float, lng: float) -> dict[str
     return await weather_response_fut
 
 
-weather_service_advanced = restate.Service(name="weather_advanced")
+weather_service_advanced = restate.Service(name="Weather_Service_Advanced")
 
 example_city_or_cities = "Tokyo and Los Angeles"
 

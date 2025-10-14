@@ -6,7 +6,7 @@ from restate import RunOptions
 from app.restate import RestateAgent
 
 
-call_chaining_svc_typed = restate.Service("CallChainingService_typed")
+call_chaining_svc_typed = restate.Service("Call_Chaining_Service_Typed")
 
 example_prompt = """Q3 Performance Summary:
 Our customer satisfaction score rose to 92 points this quarter.
@@ -20,7 +20,7 @@ class Prompt(BaseModel):
 
 
 @call_chaining_svc_typed.handler()
-async def run(ctx: restate.Context, prompt: Prompt) -> str:
+async def run_typed_call_chaining(ctx: restate.Context, prompt: Prompt) -> str:
     """Chains multiple LLM calls sequentially, where each step processes the previous step's output."""
 
     agent = Agent(
