@@ -170,7 +170,6 @@ class RestateAgent(WrapperAgent[AgentDepsT, OutputDataT]):
         infer_name: bool = True,
         toolsets: Sequence[AbstractToolset[AgentDepsT]] | None = None,
         event_stream_handler: EventStreamHandler[AgentDepsT] | None = None,
-        **_deprecated_kwargs: Never,
     ) -> AgentRunResult[Any]:
         """Run the agent with a user prompt in async mode.
         This method builds an internal agent graph (using system prompts, tools and result schemas) and then
