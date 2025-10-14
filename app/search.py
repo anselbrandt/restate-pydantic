@@ -94,7 +94,7 @@ async def tavily_search(ctx: RunContext[Deps], query: str) -> dict:
 
 search_service = restate.Service(name="search_service")
 
-example_prompt = "Give me yesterday's baseball box scores."
+example_prompt = "Give me the box scores for all Major League baseball games yesterday and give me links to each game."
 
 
 class Prompt(BaseModel):
@@ -115,4 +115,5 @@ async def handle_search_request(ctx: Context, prompt: Prompt):
     )
     restate_agent = RestateAgent(search_agent, restate_context=ctx)
     result = await restate_agent.run(prompt.prompt, deps=deps)
+    print(result.output)
     return result.output
