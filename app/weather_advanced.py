@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 from httpx import AsyncClient
 from pydantic import BaseModel
 from pydantic_ai import Agent, RunContext, ModelRetry
-from restate import Context
+from restate import Context, RunOptions
 import logfire
 import restate
 
@@ -38,6 +38,11 @@ weather_agent = Agent[Deps](
 )
 
 
+class LatLng(BaseModel):
+    lat: float
+    lng: float
+
+
 @weather_agent.tool
 async def get_lat_lng(ctx: RunContext[Deps], location_description: str) -> dict:
     """Get the latitude and longitude of a location.
@@ -49,7 +54,7 @@ async def get_lat_lng(ctx: RunContext[Deps], location_description: str) -> dict:
     params = {"access_token": ctx.deps.geo_api_key}
     loc = urllib.parse.quote(location_description)
 
-    async def action():
+    async def fetch_lat_lng():
         with logfire.span("calling geocoding API", params=params) as span:
             r = await ctx.deps.client.get(
                 f"https://api.mapbox.com/geocoding/v5/mapbox.places/{loc}.json",
@@ -59,11 +64,13 @@ async def get_lat_lng(ctx: RunContext[Deps], location_description: str) -> dict:
             data = r.json()
             if features := data["features"]:
                 lng, lat = features[0]["center"]
-                return {lat: lat, lng: lng}
+                return LatLng(lat=lat, lng=lng)
             else:
                 raise ModelRetry("Could not find the location")
 
-    return await ctx.deps.restate_context.run_typed("Getting lat/lng", action)
+    return await ctx.deps.restate_context.run_typed(
+        "Getting lat/lng", fetch_lat_lng, RunOptions(type_hint=LatLng)
+    )
 
 
 @weather_agent.tool
