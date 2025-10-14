@@ -48,7 +48,7 @@ class RestateMCPToolRunResult:
 MCP_RUN_SERDE = PydanticTypeAdapter(RestateMCPToolRunResult)
 
 
-class RestateContextRunToolSet(WrapperToolset[AgentDepsT]):
+class RestateContextRunToolset(WrapperToolset[AgentDepsT]):
     """A toolset that automatically wraps tool calls with restate's `ctx.run_typed()`."""
 
     def __init__(self, wrapped: AbstractToolset[AgentDepsT], context: Context):

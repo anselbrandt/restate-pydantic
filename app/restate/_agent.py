@@ -21,7 +21,7 @@ from pydantic_ai.toolsets.function import FunctionToolset
 from pydantic_ai.usage import RunUsage, UsageLimits
 
 from ._model import RestateModelWrapper
-from ._toolset import RestateContextRunToolSet
+from ._toolset import RestateContextRunToolset
 
 
 class RestateAgent(WrapperAgent[AgentDepsT, OutputDataT]):
@@ -88,7 +88,7 @@ class RestateAgent(WrapperAgent[AgentDepsT, OutputDataT]):
         ) -> AbstractToolset[AgentDepsT]:
             """Set the Restate context for the toolset, wrapping tools if needed."""
             if isinstance(toolset, FunctionToolset) and not disable_auto_wrapping_tools:
-                return RestateContextRunToolSet(toolset, restate_context)
+                return RestateContextRunToolset(toolset, restate_context)
             try:
                 from pydantic_ai.mcp import MCPServer
 
