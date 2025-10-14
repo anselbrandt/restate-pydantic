@@ -1,32 +1,8 @@
-from typing import Optional, List
 import restate
-from pydantic_ai import Agent, FunctionToolset
+from pydantic_ai import Agent
 from pydantic import BaseModel
-from restate import RunOptions, TerminalError
 
-
-def llm_call(
-    prompt: str,
-    system: str = "",
-    messages: Optional[list[dict[str, str]]] = [],
-    tools: Optional[List] = [],
-) -> str:
-
-    if not prompt and not messages:
-        raise TerminalError("Either prompt or messages must be provided.")
-
-    agent = Agent(model="openai:gpt-4o", system_prompt=system)
-    toolsets = [FunctionToolset(tools=list(tools))] if tools else []
-    result = agent.run_sync(
-        user_prompt=prompt,
-        message_history=messages,
-        toolsets=toolsets,
-    )
-
-    if result.output:
-        return result.output
-    else:
-        raise RuntimeError("No content in response")
+from app.restate import RestateAgent
 
 
 call_chaining_svc_typed = restate.Service("CallChainingService_typed")
@@ -46,29 +22,24 @@ class Prompt(BaseModel):
 async def run(ctx: restate.Context, prompt: Prompt) -> str:
     """Chains multiple LLM calls sequentially, where each step processes the previous step's output."""
 
+    # Create a Pydantic AI agent and wrap it with RestateAgent for automatic durability
+    agent = Agent(model="openai:gpt-4o", instructions="Be concise and follow instructions exactly.")
+    restate_agent = RestateAgent(agent, restate_context=ctx)
+
     # Step 1: Process the initial input with the first prompt
-    result = await ctx.run_typed(
-        "Extract metrics",
-        llm_call,
-        RunOptions(max_attempts=3),
-        prompt=f"Extract only the numerical values and their associated metrics from the text. "
-        f"Format each as 'metric name: metric' on a new line. Input: {prompt.message}",
+    result = await restate_agent.run(
+        f"Extract only the numerical values and their associated metrics from the text. "
+        f"Format each as 'metric name: metric' on a new line. Input: {prompt.message}"
     )
 
     # Step 2: Process the result from Step 1
-    result2 = await ctx.run_typed(
-        "Sort metrics",
-        llm_call,
-        RunOptions(max_attempts=3),
-        prompt=f"Sort all lines in descending order by numerical value. Input: {result}",
+    result2 = await restate_agent.run(
+        f"Sort all lines in descending order by numerical value. Input: {result.output}"
     )
 
     # Step 3: Process the result from Step 2
-    result3 = await ctx.run_typed(
-        "Format as table",
-        llm_call,
-        RunOptions(max_attempts=3),
-        prompt=f"Format the sorted data as a markdown table with columns 'Metric Name' and 'Value'. Input: {result2}",
+    result3 = await restate_agent.run(
+        f"Format the sorted data as a markdown table with columns 'Metric Name' and 'Value'. Input: {result2.output}"
     )
 
-    return result3
+    return result3.output
