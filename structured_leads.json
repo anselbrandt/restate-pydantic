@@ -1,0 +1,147 @@
+{
+  "company_context": "Lead generation for POS systems targeting small businesses in the Canadian restaurant and retail sectors, focusing on owners, decision-makers, operations managers, IT and finance managers, with a special emphasis on bilingual markets in Quebec.",
+  "total_tiers": 4,
+  "priority_tiers": [
+    {
+      "tier_name": "Priority 1 Owner Decision Maker Level Restaurants and Retail Canada",
+      "tier_description": "Targets small business owners and top-level decision makers such as owners, founders, presidents, and partners in restaurants and retail sectors in Canada for direct influence on purchasing decisions.",
+      "priority_level": 1,
+      "queries": [
+        {
+          "query": "owner restaurant Canada",
+          "description": "Small business owners in restaurants across Canada"
+        },
+        {
+          "query": "owner retail Canada",
+          "description": "Small business owners in retail across Canada"
+        },
+        {
+          "query": "founder restaurant Canada",
+          "description": "Founders of restaurant businesses in Canada"
+        },
+        {
+          "query": "founder retail Canada",
+          "description": "Founders of retail businesses in Canada"
+        },
+        {
+          "query": "president restaurant Canada",
+          "description": "Presidents of restaurant companies in Canada"
+        },
+        {
+          "query": "president retail Canada",
+          "description": "Presidents of retail companies in Canada"
+        },
+        {
+          "query": "partner restaurant Canada",
+          "description": "Partners in restaurant businesses in Canada"
+        },
+        {
+          "query": "partner retail Canada",
+          "description": "Partners in retail businesses in Canada"
+        }
+      ]
+    },
+    {
+      "tier_name": "Priority 2 Manager Operations Level Small Business Focus",
+      "tier_description": "Targets managerial roles such as general managers, operations managers, and store managers in independent Canadian restaurants and retail, focusing on those who oversee daily operations and could influence purchasing decisions.",
+      "priority_level": 2,
+      "queries": [
+        {
+          "query": "general manager restaurant Canada",
+          "description": "General managers in restaurants across Canada"
+        },
+        {
+          "query": "general manager retail Canada",
+          "description": "General managers in retail businesses across Canada"
+        },
+        {
+          "query": "operations manager restaurant Canada",
+          "description": "Operations managers in restaurant businesses in Canada"
+        },
+        {
+          "query": "operations manager retail Canada",
+          "description": "Operations managers in retail businesses in Canada"
+        },
+        {
+          "query": "store manager independent retailer Canada",
+          "description": "Store managers in independent retail businesses in Canada"
+        },
+        {
+          "query": "store manager independent restaurant Canada",
+          "description": "Store managers in independent restaurant businesses in Canada"
+        }
+      ]
+    },
+    {
+      "tier_name": "Priority 3 Technology IT Finance Decision Makers Early Tech Adopters",
+      "tier_description": "Targets IT, finance, and technology managers who are likely involved in the selection and adoption of POS technology in small Canadian restaurants and retail companies.",
+      "priority_level": 3,
+      "queries": [
+        {
+          "query": "IT manager restaurant Canada",
+          "description": "Information technology managers in restaurants across Canada"
+        },
+        {
+          "query": "IT manager retail Canada",
+          "description": "Information technology managers in retail businesses across Canada"
+        },
+        {
+          "query": "finance manager restaurant Canada",
+          "description": "Finance managers in restaurant businesses in Canada"
+        },
+        {
+          "query": "finance manager retail Canada",
+          "description": "Finance managers in retail businesses in Canada"
+        },
+        {
+          "query": "technology manager restaurant Canada",
+          "description": "Technology managers in restaurant businesses in Canada"
+        },
+        {
+          "query": "technology manager retail Canada",
+          "description": "Technology managers in retail businesses in Canada"
+        }
+      ]
+    },
+    {
+      "tier_name": "Priority 4 French Speaking Bilingual Markets Quebec Focus",
+      "tier_description": "Focuses on French-speaking markets in Quebec to provide bilingual POS solutions by targeting owners, founders, and general managers in Quebec's restaurant and retail sectors.",
+      "priority_level": 4,
+      "queries": [
+        {
+          "query": "owner restaurant Quebec",
+          "description": "Owners of restaurant businesses in Quebec"
+        },
+        {
+          "query": "owner retail Quebec",
+          "description": "Owners of retail businesses in Quebec"
+        },
+        {
+          "query": "founder restaurant Quebec",
+          "description": "Founders of restaurant businesses in Quebec"
+        },
+        {
+          "query": "founder retail Quebec",
+          "description": "Founders of retail businesses in Quebec"
+        },
+        {
+          "query": "general manager restaurant Quebec",
+          "description": "General managers of restaurant businesses in Quebec"
+        },
+        {
+          "query": "general manager retail Quebec",
+          "description": "General managers of retail businesses in Quebec"
+        }
+      ]
+    }
+  ],
+  "usage_instructions": [
+    "Begin outreach campaigns prioritizing Priority 1 queries focusing on Owners and Founders for maximum decision-maker engagement.",
+    "Rotate queries to create diverse daily outreach batches targeting up to 10 leads per day, maintaining priority order from 1 to 4.",
+    "Leverage Priority 2 queries to connect with operational managers who can influence POS system adoption.",
+    "Use Priority 3 queries to reach technology and finance decision-makers in small businesses likely to be early adopters of new POS technology.",
+    "Target Priority 4 queries when focusing on bilingual markets in Quebec for tailored POS solutions.",
+    "Ensure LinkedIn searches use these keywords verbatim for best results while filtering for small and independent businesses as appropriate.",
+    "Monitor lead volume to confirm that each query yields at least 100 relevant leads and adjust as necessary."
+  ]
+}

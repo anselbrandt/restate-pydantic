@@ -70,5 +70,6 @@ async def run_lead_generator(ctx: restate.Context, prompt: Prompt) -> str:
             RunOptions(max_attempts=3, type_hint=LinkedInLeadQueries),
             prompt_text=f"Structure these LinkedIn search queries for automated lead generation: {unstructured_output}",
         )
-
+        # with open("structured_leads.json", "w", encoding="utf-8") as f:
+        #     json.dump(structured_result.model_dump(), f, indent=2)
         return structured_result.model_dump_json()
