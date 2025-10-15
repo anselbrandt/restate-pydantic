@@ -88,73 +88,75 @@ async def run_lead_generator(ctx: restate.Context, prompt: Prompt) -> str:
             result = await structured_restate_agent.run(prompt_text)
             return result.output
 
-        unstructured_output: str = await ctx.run_typed(
-            "Freeform leads generator",
-            unstructured_agent_call,
-            RunOptions(max_attempts=3, type_hint=str),
-            prompt_text=prompt.prompt,
-        )
-
-        structured_output: LinkedInLeadQueries = await ctx.run_typed(
-            "Structured leads generator",
-            structured_leads_agent_call,
-            RunOptions(max_attempts=3, type_hint=LinkedInLeadQueries),
-            prompt_text=f"Structure these LinkedIn search queries for automated lead generation: {unstructured_output}",
-        )
+        with logfire.span("Generating Query Plan") as span:
+            unstructured_output: str = await ctx.run_typed(
+                "Freeform leads generator",
+                unstructured_agent_call,
+                RunOptions(max_attempts=3, type_hint=str),
+                prompt_text=prompt.prompt,
+            )
+        with logfire.span("Generating Structured Query Config") as span:
+            structured_output: LinkedInLeadQueries = await ctx.run_typed(
+                "Structured leads generator",
+                structured_leads_agent_call,
+                RunOptions(max_attempts=3, type_hint=LinkedInLeadQueries),
+                prompt_text=f"Structure these LinkedIn search queries for automated lead generation: {unstructured_output}",
+            )
 
         async def query_executor_call(structured_output: LinkedInLeadQueries):
-            with logfire.span("Executing queries") as span:
-                tavily_client = AsyncTavilyClient(api_key=TAVILY_API_KEY)
+            tavily_client = AsyncTavilyClient(api_key=TAVILY_API_KEY)
 
-                company_context = structured_output.company_context
-                total_tiers = structured_output.total_tiers
-                usage_instructions = structured_output.usage_instructions
-                tiers = structured_output.priority_tiers
+            company_context = structured_output.company_context
+            total_tiers = structured_output.total_tiers
+            usage_instructions = structured_output.usage_instructions
+            tiers = structured_output.priority_tiers
 
-                tier_results = []
-                for tier in tiers:
-                    with logfire.span(f"Tier {tier.priority_level} queries") as span:
-                        name = tier.tier_name
-                        description = tier.tier_description
-                        priority = tier.priority_level
-                        query_results = []
-                        for q in tier.queries:
-                            with logfire.span(f"{q.query}", query=q.query) as span:
-                                query = f"{q.query} site:linkedin.com"
-                                response = await tavily_client.search(
-                                    query=query,
-                                    include_raw_content=True,
-                                    max_results=10,
-                                    include_domains=["linkedin.com"],
-                                )
-                                query_results.append(
-                                    QueryResults(
-                                        query=q.query,
-                                        description=q.description,
-                                        results=TavilyResponse(**response),
-                                    )
-                                )
-                        tier_results.append(
-                            TierResults(
-                                name=name,
-                                description=description,
-                                priority=priority,
-                                results=query_results,
+            tier_results = []
+            for tier in tiers:
+                with logfire.span(f"Tier {tier.priority_level} queries") as span:
+                    name = tier.tier_name
+                    description = tier.tier_description
+                    priority = tier.priority_level
+                    query_results = []
+                    for q in tier.queries:
+                        with logfire.span(f"{q.query}", query=q.query) as span:
+                            query = f"{q.query} site:linkedin.com"
+                            response = await tavily_client.search(
+                                query=query,
+                                include_raw_content=True,
+                                max_results=10,
+                                include_domains=["linkedin.com"],
                             )
+                            query_results.append(
+                                QueryResults(
+                                    query=q.query,
+                                    description=q.description,
+                                    results=TavilyResponse(**response),
+                                )
+                            )
+                    tier_results.append(
+                        TierResults(
+                            name=name,
+                            description=description,
+                            priority=priority,
+                            results=query_results,
                         )
-                return Leads(
-                    company_context=company_context,
-                    total_tiers=total_tiers,
-                    usage_instructions=usage_instructions,
-                    tiers=tier_results,
-                )
+                    )
+            return Leads(
+                company_context=company_context,
+                total_tiers=total_tiers,
+                usage_instructions=usage_instructions,
+                tiers=tier_results,
+            )
 
-    leads: Leads = await ctx.run_typed(
-        "Executing queries",
-        query_executor_call,
-        RunOptions(max_attempts=3, type_hint=Leads),
-        structured_output,
-    )
-    with open("leads.json", "w", encoding="utf-8") as f:
-        json.dump(leads.model_dump(), f, indent=2)
-    return leads.model_dump()
+        with logfire.span("Executing queries") as span:
+            leads: Leads = await ctx.run_typed(
+                "Executing queries",
+                query_executor_call,
+                RunOptions(max_attempts=3, type_hint=Leads),
+                structured_output,
+            )
+        with logfire.span("Saving results") as span:
+            with open("leads.json", "w", encoding="utf-8") as f:
+                json.dump(leads.model_dump(), f, indent=2)
+        return leads.model_dump()
