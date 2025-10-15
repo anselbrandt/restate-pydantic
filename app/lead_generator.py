@@ -160,19 +160,19 @@ async def run_lead_generator(ctx: restate.Context, prompt: Prompt) -> str:
             with open("leads.json", "w", encoding="utf-8") as f:
                 json.dump(leads.model_dump(), f, indent=2)
 
-        async def lead_enhacement_call(leads: Leads):
+        async def lead_enrichment_call(leads: Leads):
             return leads
 
-        with logfire.span("Enhancing leads") as span:
-            enhanced_leads = await ctx.run_typed(
-                "Enhanding leads",
-                lead_enhacement_call,
+        with logfire.span("Enriching leads") as span:
+            enriched_leads = await ctx.run_typed(
+                "Enriching leads",
+                lead_enrichment_call,
                 RunOptions(max_attempts=3, type_hint=Leads),
                 leads,
             )
 
-        with logfire.span("Saving enhanced leads") as span:
-            with open("enhanced_leads.json", "w", encoding="utf-8") as f:
-                json.dump(enhanced_leads.model_dump(), f, indent=2)
+        with logfire.span("Saving enriched leads") as span:
+            with open("enriched_leads.json", "w", encoding="utf-8") as f:
+                json.dump(enriched_leads.model_dump(), f, indent=2)
 
-        return enhanced_leads
+        return enriched_leads
