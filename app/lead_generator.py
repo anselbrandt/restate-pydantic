@@ -10,7 +10,12 @@ from tavily import AsyncTavilyClient
 import logfire
 import restate
 
-from app.data.example_prompt import example_prompt
+from app.data.example_prompt import (
+    example_prompt,
+    company_name,
+    what_we_do,
+    target_market,
+)
 from app.restate import RestateAgent
 from app.schemas.lead_generator import (
     LinkedInLeadQueries,
@@ -52,12 +57,25 @@ class Leads(BaseModel):
 lead_generator_service = restate.Service("Lead_Generator_Service")
 
 
+class Company(BaseModel):
+    company_name: str = company_name
+    what_we_do: str = what_we_do
+    target_market: str = target_market
+
+
 class Prompt(BaseModel):
     prompt: str = example_prompt
 
 
+class LeadGeneratorInput(BaseModel):
+    prompt: Prompt
+    company: Company
+
+
 @lead_generator_service.handler()
-async def run_lead_generator(ctx: restate.Context, prompt: Prompt) -> str:
+async def run_lead_generator(ctx: restate.Context, input: LeadGeneratorInput) -> str:
+    prompt = input.prompt
+    company = input.company
     with logfire.span("Generating leads") as span:
 
         unstructured_leads_agent = Agent(
@@ -160,7 +178,11 @@ async def run_lead_generator(ctx: restate.Context, prompt: Prompt) -> str:
             with open("leads.json", "w", encoding="utf-8") as f:
                 json.dump(leads.model_dump(), f, indent=2)
 
-        async def lead_enrichment_call(leads: Leads):
+        async def lead_enrichment_call(leads: Leads, company: Company):
+            with logfire.span("Company context") as span:
+                logfire.info(company.company_name)
+                logfire.info(company.what_we_do)
+                logfire.info(company.target_market)
             return leads
 
         with logfire.span("Enriching leads") as span:
@@ -168,11 +190,12 @@ async def run_lead_generator(ctx: restate.Context, prompt: Prompt) -> str:
                 "Enriching leads",
                 lead_enrichment_call,
                 RunOptions(max_attempts=3, type_hint=Leads),
-                leads,
+                leads=leads,
+                company=company,
             )
 
         with logfire.span("Saving enriched leads") as span:
             with open("enriched_leads.json", "w", encoding="utf-8") as f:
                 json.dump(enriched_leads.model_dump(), f, indent=2)
 
-        return enriched_leads
+        return enriched_leads.model_dump()
