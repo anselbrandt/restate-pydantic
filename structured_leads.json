@@ -1,0 +1,98 @@
+{
+  "company_context": "Company is a B2B software provider specializing in CRM solutions tailored for mid-sized technology companies in North America.",
+  "total_tiers": 3,
+  "priority_tiers": [
+    {
+      "tier_name": "Tier 1: Primary Decision Makers in Target Market",
+      "tier_description": "This tier targets C-level executives and directors who are the main decision makers for CRM purchases in mid-sized technology companies in North America, ensuring high conversion potential.",
+      "priority_level": 1,
+      "queries": [
+        {
+          "query": "CEO technology companies north america",
+          "description": "CEOs at mid-sized technology companies in North America"
+        },
+        {
+          "query": "CTO technology companies north america",
+          "description": "CTOs at mid-sized technology companies in North America"
+        },
+        {
+          "query": "CIO technology companies north america",
+          "description": "CIOs at mid-sized technology companies in North America"
+        },
+        {
+          "query": "Director sales technology companies north america",
+          "description": "Sales directors at mid-sized technology companies in North America"
+        },
+        {
+          "query": "Head sales technology companies north america",
+          "description": "Heads of sales at mid-sized technology companies in North America"
+        },
+        {
+          "query": "VP sales technology companies north america",
+          "description": "Vice presidents of sales at mid-sized technology companies in North America"
+        }
+      ]
+    },
+    {
+      "tier_name": "Tier 2: Mid-Level Managers Influencing CRM Decisions",
+      "tier_description": "Targets mid-level managers who influence CRM purchasing decisions in the mid-sized technology sector in North America to widen the lead funnel.",
+      "priority_level": 2,
+      "queries": [
+        {
+          "query": "Sales manager technology companies north america",
+          "description": "Sales managers at mid-sized technology companies in North America"
+        },
+        {
+          "query": "Business development manager technology companies north america",
+          "description": "Business development managers at mid-sized technology companies in North America"
+        },
+        {
+          "query": "Product manager technology companies north america",
+          "description": "Product managers at mid-sized technology companies in North America"
+        },
+        {
+          "query": "Account manager technology companies north america",
+          "description": "Account managers at mid-sized technology companies in North America"
+        },
+        {
+          "query": "Customer success manager technology companies north america",
+          "description": "Customer success managers at mid-sized technology companies in North America"
+        }
+      ]
+    },
+    {
+      "tier_name": "Tier 3: Broader Technology Industry Roles",
+      "tier_description": "Includes broader roles in technology companies beyond direct CRM decision makers for extended brand awareness and future opportunities within the targeted sector.",
+      "priority_level": 3,
+      "queries": [
+        {
+          "query": "Marketing manager technology companies north america",
+          "description": "Marketing managers at mid-sized technology companies in North America"
+        },
+        {
+          "query": "IT manager technology companies north america",
+          "description": "IT managers at mid-sized technology companies in North America"
+        },
+        {
+          "query": "Operations manager technology companies north america",
+          "description": "Operations managers at mid-sized technology companies in North America"
+        },
+        {
+          "query": "HR manager technology companies north america",
+          "description": "HR managers at mid-sized technology companies in North America"
+        },
+        {
+          "query": "Software engineer technology companies north america",
+          "description": "Software engineers at mid-sized technology companies in North America"
+        }
+      ]
+    }
+  ],
+  "usage_instructions": [
+    "Use Tier 1 queries as the highest priority for direct outreach to decision makers likely to convert quickly.",
+    "Utilize Tier 2 queries to nurture relationships with influencers who can advocate internally within their companies.",
+    "Leverage Tier 3 queries to build broad brand visibility and identify potential future leads outside immediate decision makers.",
+    "Combine these queries with LinkedIn's filter tools for company size, geography, and industry to improve lead quality.",
+    "Continuously update queries based on evolving business focus and feedback from sales outreach results."
+  ]
+}

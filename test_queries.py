@@ -1,6 +1,5 @@
 import asyncio
 import json
-import re
 import os
 
 from dotenv import load_dotenv
@@ -13,16 +12,6 @@ load_dotenv()
 TAVILY_API_KEY = os.getenv("TAVILY_API_KEY")
 
 tavily_client = AsyncTavilyClient(api_key=TAVILY_API_KEY)
-
-
-def clean_query(query: str) -> str:
-    cleaned = query.replace('\\"', "").replace('"', "")
-    cleaned = re.sub(r"\s*site:linkedin\.com/in/\s*", "", cleaned)
-    cleaned = " ".join(cleaned.split())
-    if cleaned.strip():
-        return f"{cleaned} site:linkedin.com/in/"
-    else:
-        return "site:linkedin.com/in/"
 
 
 async def execute_single_search(query: SearchQuery):
@@ -51,7 +40,7 @@ async def execute_single_search(query: SearchQuery):
 
 
 async def main():
-    with open("structured_leads.json", "r", encoding="utf-8") as f:
+    with open("responses/structured_leads.json", "r", encoding="utf-8") as f:
         data = json.loads(f.read())
 
     leads = LinkedInLeadQueries(**data)

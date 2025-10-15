@@ -2,10 +2,10 @@ from dotenv import load_dotenv
 from pydantic import BaseModel
 from pydantic_ai import Agent
 from restate import RunOptions
+import json
 import logfire
 import restate
 
-from app.data.example_prompt import example_prompt
 from app.restate import RestateAgent
 from app.schemas.lead_generator import LinkedInLeadQueries
 from app.system_prompts.lead_generator import (
@@ -20,13 +20,34 @@ logfire.instrument_pydantic_ai()
 
 lead_generator_service = restate.Service("Lead_Generator_Service")
 
+company_name = "Clerq"
+what_we_do = "We provide a modern, bilingual POS system with sleek hardware and simple software, built for Canadian small businesses with full tax compliance, bilingual interface and guaranteed customer support."
+target_market = "We serve small, independent restaurants and retailers in Canada who need a reliable POS tailored to local needs."
 
-class Prompt(BaseModel):
-    prompt: str = example_prompt
+
+class Company(BaseModel):
+    company_name: str
+    what_we_do: str
+    target_market: str
+
+
+example_company = Company(
+    company_name="Clerq",
+    what_we_do="We provide a modern, bilingual POS system with sleek hardware and simple software, built for Canadian small businesses with full tax compliance, bilingual interface and guaranteed customer support.",
+    target_market="We serve small, independent restaurants and retailers in Canada who need a reliable POS tailored to local needs.",
+)
 
 
 @lead_generator_service.handler()
-async def run_lead_generator(ctx: restate.Context, prompt: Prompt) -> str:
+async def run_lead_generator(
+    ctx: restate.Context, company: Company = example_company
+) -> str:
+    prompt = f"""
+    "company_name": "{company.company_name}"
+    "what_we_do": "{company.what_we_do}"
+    "target_market": "{company.target_market}"
+    """
+
     with logfire.span("Generating leads") as span:
 
         unstructured_leads_agent = Agent(
@@ -61,7 +82,7 @@ async def run_lead_generator(ctx: restate.Context, prompt: Prompt) -> str:
             "Freeform leads generator",
             unstructured_agent_call,
             RunOptions(max_attempts=3),
-            prompt_text=prompt.prompt,
+            prompt_text=prompt,
         )
 
         structured_result = await ctx.run_typed(
@@ -70,6 +91,6 @@ async def run_lead_generator(ctx: restate.Context, prompt: Prompt) -> str:
             RunOptions(max_attempts=3, type_hint=LinkedInLeadQueries),
             prompt_text=f"Structure these LinkedIn search queries for automated lead generation: {unstructured_output}",
         )
-        # with open("structured_leads.json", "w", encoding="utf-8") as f:
-        #     json.dump(structured_result.model_dump(), f, indent=2)
+        with open("structured_leads.json", "w", encoding="utf-8") as f:
+            json.dump(structured_result.model_dump(), f, indent=2)
         return structured_result.model_dump_json()
