@@ -1,0 +1,36 @@
+{
+  "queries": [
+    {
+      "query": "owner restaurant Canada",
+      "description": "Owners of restaurants in Canada"
+    },
+    {
+      "query": "owner retail Canada",
+      "description": "Owners of retail businesses in Canada"
+    },
+    {
+      "query": "founder restaurant Canada",
+      "description": "Founders of restaurants in Canada"
+    },
+    {
+      "query": "founder retail Canada",
+      "description": "Founders of retail businesses in Canada"
+    },
+    {
+      "query": "cofounder restaurant Canada",
+      "description": "Co-founders of restaurants in Canada"
+    },
+    {
+      "query": "cofounder retail Canada",
+      "description": "Co-founders of retail businesses in Canada"
+    },
+    {
+      "query": "president restaurant Canada",
+      "description": "Presidents of restaurants in Canada"
+    },
+    {
+      "query": "president retail Canada",
+      "description": "Presidents of retail businesses in Canada"
+    }
+  ]
+}

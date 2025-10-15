@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional, Dict, Any
 
 
 from pydantic import BaseModel, Field
@@ -50,6 +50,14 @@ class TavilyResponse(BaseModel):
     results: List[TavilyResult] = Field(description="List of search results")
     response_time: float = Field(description="Time taken to execute the search")
     request_id: str = Field(description="Unique identifier for this search request")
+
+
+class SearchResults(BaseModel):
+    search_results: List[Dict[str, Any]]
+    priority_1_results: List[Dict[str, Any]]
+    total_queries: int
+    total_results: int
+    company_context: str
 
 
 class ScoredLead(BaseModel):

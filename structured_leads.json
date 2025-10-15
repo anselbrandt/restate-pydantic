@@ -1,98 +1,126 @@
 {
-  "company_context": "Company is a B2B software provider specializing in CRM solutions tailored for mid-sized technology companies in North America.",
+  "company_context": "Bilingual, tax-compliant POS system targeting small independent restaurants and retailers in Canada.",
   "total_tiers": 3,
   "priority_tiers": [
     {
-      "tier_name": "Tier 1: Primary Decision Makers in Target Market",
-      "tier_description": "This tier targets C-level executives and directors who are the main decision makers for CRM purchases in mid-sized technology companies in North America, ensuring high conversion potential.",
+      "tier_name": "Owners and Top Decision Makers in Small Independent Restaurants and Retailers Canada",
+      "tier_description": "This tier targets the most influential business leaders such as owners, founders, cofounders, and presidents. These individuals have the authority to make purchasing decisions for small independent restaurants and retailers, making them the highest priority for direct outreach.",
       "priority_level": 1,
       "queries": [
         {
-          "query": "CEO technology companies north america",
-          "description": "CEOs at mid-sized technology companies in North America"
+          "query": "owner restaurant Canada",
+          "description": "Owners of restaurants in Canada"
         },
         {
-          "query": "CTO technology companies north america",
-          "description": "CTOs at mid-sized technology companies in North America"
+          "query": "owner retail Canada",
+          "description": "Owners of retail businesses in Canada"
         },
         {
-          "query": "CIO technology companies north america",
-          "description": "CIOs at mid-sized technology companies in North America"
+          "query": "founder restaurant Canada",
+          "description": "Founders of restaurants in Canada"
         },
         {
-          "query": "Director sales technology companies north america",
-          "description": "Sales directors at mid-sized technology companies in North America"
+          "query": "founder retail Canada",
+          "description": "Founders of retail businesses in Canada"
         },
         {
-          "query": "Head sales technology companies north america",
-          "description": "Heads of sales at mid-sized technology companies in North America"
+          "query": "cofounder restaurant Canada",
+          "description": "Cofounders of restaurants in Canada"
         },
         {
-          "query": "VP sales technology companies north america",
-          "description": "Vice presidents of sales at mid-sized technology companies in North America"
+          "query": "cofounder retail Canada",
+          "description": "Cofounders of retail businesses in Canada"
+        },
+        {
+          "query": "president restaurant Canada",
+          "description": "Presidents of restaurants in Canada"
+        },
+        {
+          "query": "president retail Canada",
+          "description": "Presidents of retail businesses in Canada"
         }
       ]
     },
     {
-      "tier_name": "Tier 2: Mid-Level Managers Influencing CRM Decisions",
-      "tier_description": "Targets mid-level managers who influence CRM purchasing decisions in the mid-sized technology sector in North America to widen the lead funnel.",
+      "tier_name": "General Managers Operations Directors and Senior Managers Canada",
+      "tier_description": "Focuses on senior operational roles such as general managers, operations managers, store managers, and managing directors. These roles are important as they influence day-to-day operations and can be key advocates for the POS system within the business.",
       "priority_level": 2,
       "queries": [
         {
-          "query": "Sales manager technology companies north america",
-          "description": "Sales managers at mid-sized technology companies in North America"
+          "query": "general manager restaurant Canada",
+          "description": "General managers of restaurants in Canada"
         },
         {
-          "query": "Business development manager technology companies north america",
-          "description": "Business development managers at mid-sized technology companies in North America"
+          "query": "general manager retail Canada",
+          "description": "General managers of retail businesses in Canada"
         },
         {
-          "query": "Product manager technology companies north america",
-          "description": "Product managers at mid-sized technology companies in North America"
+          "query": "operations manager restaurant Canada",
+          "description": "Operations managers of restaurants in Canada"
         },
         {
-          "query": "Account manager technology companies north america",
-          "description": "Account managers at mid-sized technology companies in North America"
+          "query": "operations manager retail Canada",
+          "description": "Operations managers of retail businesses in Canada"
         },
         {
-          "query": "Customer success manager technology companies north america",
-          "description": "Customer success managers at mid-sized technology companies in North America"
+          "query": "store manager retail Canada",
+          "description": "Store managers of retail businesses in Canada"
+        },
+        {
+          "query": "managing director restaurant Canada",
+          "description": "Managing directors of restaurants in Canada"
+        },
+        {
+          "query": "store owner Canada",
+          "description": "Store owners across Canada - includes smaller independent stores"
         }
       ]
     },
     {
-      "tier_name": "Tier 3: Broader Technology Industry Roles",
-      "tier_description": "Includes broader roles in technology companies beyond direct CRM decision makers for extended brand awareness and future opportunities within the targeted sector.",
+      "tier_name": "Technology and Finance Decision Makers Canada",
+      "tier_description": "Targets individuals responsible for technology, finance, and purchasing decisions including IT managers, finance managers, purchasing managers, and controllers. This tier is critical for selling a POS system given their involvement in system selection and financial approvals.",
       "priority_level": 3,
       "queries": [
         {
-          "query": "Marketing manager technology companies north america",
-          "description": "Marketing managers at mid-sized technology companies in North America"
+          "query": "IT manager restaurant Canada",
+          "description": "IT managers for restaurants in Canada"
         },
         {
-          "query": "IT manager technology companies north america",
-          "description": "IT managers at mid-sized technology companies in North America"
+          "query": "IT manager retail Canada",
+          "description": "IT managers for retail businesses in Canada"
         },
         {
-          "query": "Operations manager technology companies north america",
-          "description": "Operations managers at mid-sized technology companies in North America"
+          "query": "finance manager restaurant Canada",
+          "description": "Finance managers for restaurants in Canada"
         },
         {
-          "query": "HR manager technology companies north america",
-          "description": "HR managers at mid-sized technology companies in North America"
+          "query": "finance manager retail Canada",
+          "description": "Finance managers for retail businesses in Canada"
         },
         {
-          "query": "Software engineer technology companies north america",
-          "description": "Software engineers at mid-sized technology companies in North America"
+          "query": "purchasing manager restaurant Canada",
+          "description": "Purchasing managers for restaurants in Canada"
+        },
+        {
+          "query": "purchasing manager retail Canada",
+          "description": "Purchasing managers for retail businesses in Canada"
+        },
+        {
+          "query": "controller restaurant Canada",
+          "description": "Controllers for restaurants in Canada"
+        },
+        {
+          "query": "controller retail Canada",
+          "description": "Controllers for retail businesses in Canada"
         }
       ]
     }
   ],
   "usage_instructions": [
-    "Use Tier 1 queries as the highest priority for direct outreach to decision makers likely to convert quickly.",
-    "Utilize Tier 2 queries to nurture relationships with influencers who can advocate internally within their companies.",
-    "Leverage Tier 3 queries to build broad brand visibility and identify potential future leads outside immediate decision makers.",
-    "Combine these queries with LinkedIn's filter tools for company size, geography, and industry to improve lead quality.",
-    "Continuously update queries based on evolving business focus and feedback from sales outreach results."
+    "Start outreach efforts prioritizing Tier 1 to engage owners and founders directly for maximal decision-making influence.",
+    "Use Tier 2 queries to identify senior operational managers who may champion the POS system internally.",
+    "Target Tier 3 decision makers for technology and finance who influence purchasing and implementation details.",
+    "Each query is designed to yield 100+ leads; outreach should be performed in small daily batches for quality engagement.",
+    "Filter searches further by Canadian cities or provinces like Toronto, Montreal, Vancouver to localize campaigns when needed."
   ]
 }
