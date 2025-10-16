@@ -188,17 +188,17 @@ async def run_lead_generator(ctx: restate.Context, company: Company) -> str:
             output_type=TopLeads,
             retries=2,
         )
-        scoring_agent_restate_agent = RestateAgent[None, TopLeads](
+        scoring_restate_agent = RestateAgent[None, TopLeads](
             scoring_agent, restate_context=ctx
         )
 
         async def scoring_agent_call(prompt_text: str) -> TopLeads:
-            result = await scoring_agent_restate_agent.run(prompt_text)
+            result = await scoring_restate_agent.run(prompt_text)
             return result.output
 
         with logfire.span("Scoring top leads") as span:
             scored_leads: TopLeads = await ctx.run_typed(
-                "Generating scoring instructions",
+                "Scoring top leads",
                 scoring_agent_call,
                 RunOptions(max_attempts=3, type_hint=TopLeads),
                 prompt_text=json.dumps(top_leads, indent=2),
