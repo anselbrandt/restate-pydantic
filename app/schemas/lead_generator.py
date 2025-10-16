@@ -3,6 +3,12 @@ from typing import List, Optional, Dict, Any
 
 from pydantic import BaseModel, Field
 
+from app.data.example_prompt import (
+    company_name,
+    what_we_do,
+    target_market,
+)
+
 
 class SearchQuery(BaseModel):
     query: str = Field(
@@ -125,3 +131,9 @@ class TopLeadsWithMessaging(BaseModel):
     outreach_recommendations: List[str] = Field(
         description="Strategic recommendations for outreach approach"
     )
+
+
+class Company(BaseModel):
+    company_name: str = company_name
+    what_we_do: str = what_we_do
+    target_market: str = target_market

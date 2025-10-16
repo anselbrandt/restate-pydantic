@@ -1,3 +1,5 @@
+from app.schemas.lead_generator import Company
+
 unstructured_instructions = """
 You are an assistant that helps users generate optimized LinkedIn search queries to find high-quality leads for their business.
 
@@ -43,9 +45,7 @@ The query field should contain only space-separated keywords without any quotes 
 """
 
 
-def generate_lead_scoring_instructions(
-    company_name: str, what_we_do: str, target_market: str
-) -> str:
+def generate_lead_scoring_instructions(company: Company) -> str:
     """
     Dynamically generate lead scoring instructions based on the company's specific context.
 
@@ -59,12 +59,12 @@ def generate_lead_scoring_instructions(
     """
 
     return f"""
-You are a B2B lead qualification specialist analyzing LinkedIn prospects for {company_name}.
+You are a B2B lead qualification specialist analyzing LinkedIn prospects for {company.company_name}.
 
 **COMPANY CONTEXT:**
-- Company: {company_name}
-- Offering: {what_we_do}
-- Target Market: {target_market}
+- Company: {company.company_name}
+- Offering: {company.what_we_do}
+- Target Market: {company.target_market}
 
 **YOUR TASK:**
 Analyze LinkedIn search results to identify the highest-quality prospects who match the target market profile and have decision-making authority relevant to the company's offering.
@@ -72,7 +72,7 @@ Analyze LinkedIn search results to identify the highest-quality prospects who ma
 **LEAD ANALYSIS CRITERIA:**
 
 **1. TARGET MARKET ALIGNMENT (40% of score)**
-Based on the target market description: "{target_market}"
+Based on the target market description: "{company.target_market}"
 - Geographic location match
 - Industry/sector alignment  
 - Company size/type fit
@@ -80,7 +80,7 @@ Based on the target market description: "{target_market}"
 - Compliance/regulatory requirements (if applicable)
 
 **2. DECISION-MAKING AUTHORITY (35% of score)**
-Prioritize based on purchasing power for: {what_we_do}
+Prioritize based on purchasing power for: {company.what_we_do}
 - C-level executives (CEO, CTO, CFO, etc.)
 - VPs and Senior Directors
 - Department heads relevant to the offering
@@ -88,7 +88,7 @@ Prioritize based on purchasing power for: {what_we_do}
 - Procurement/purchasing decision makers
 
 **3. ROLE RELEVANCE (15% of score)**
-How closely their role relates to: {what_we_do}
+How closely their role relates to: {company.what_we_do}
 - Direct users of the product/service
 - Technical evaluators or implementers
 - Business stakeholders who would benefit
@@ -108,9 +108,9 @@ How closely their role relates to: {what_we_do}
 - Below 60: Poor fit - Exclude from top 10
 
 **SPECIFIC FOCUS AREAS:**
-Given that {company_name} offers {what_we_do}, pay special attention to:
+Given that {company.company_name} offers {company.what_we_do}, pay special attention to:
 - Leads who would directly benefit from or evaluate this offering
-- Companies that match the target market: {target_market}
+- Companies that match the target market: {company.target_market}
 - Decision makers who typically purchase similar solutions
 - Geographic and industry alignment as specified
 
@@ -121,7 +121,7 @@ Given that {company_name} offers {what_we_do}, pay special attention to:
 - Include tactical outreach recommendations based on their profile and company context
 - Focus on leads most likely to engage and convert
 
-Remember: These leads will receive personalized outreach from {company_name}, so prioritize quality matches who genuinely fit the target market profile.
+Remember: These leads will receive personalized outreach from {company.company_name}, so prioritize quality matches who genuinely fit the target market profile.
 """
 
 

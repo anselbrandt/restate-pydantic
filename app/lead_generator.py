@@ -10,20 +10,13 @@ from tavily import AsyncTavilyClient
 import logfire
 import restate
 
-from app.data.example_prompt import (
-    example_prompt,
-    company_name,
-    what_we_do,
-    target_market,
-)
+from app.schemas.lead_generator import Company
 from app.restate import RestateAgent
-from app.schemas.lead_generator import (
-    LinkedInLeadQueries,
-    TavilyResponse,
-)
+from app.schemas.lead_generator import LinkedInLeadQueries, TavilyResponse, TopLeads
 from app.system_prompts.lead_generator import (
     structured_instructions,
     unstructured_instructions,
+    generate_lead_scoring_instructions,
 )
 
 load_dotenv()
@@ -55,12 +48,6 @@ class Leads(BaseModel):
 
 
 lead_generator_service = restate.Service("Lead_Generator_Service")
-
-
-class Company(BaseModel):
-    company_name: str = company_name
-    what_we_do: str = what_we_do
-    target_market: str = target_market
 
 
 @lead_generator_service.handler()
@@ -172,24 +159,72 @@ async def run_lead_generator(ctx: restate.Context, company: Company) -> str:
             with open("leads.json", "w", encoding="utf-8") as f:
                 json.dump(leads.model_dump(), f, indent=2)
 
-        async def lead_enrichment_call(leads: Leads, company: Company):
-            with logfire.span("Company context") as span:
-                logfire.info(company.company_name)
-                logfire.info(company.what_we_do)
-                logfire.info(company.target_market)
-            return leads
+        top_leads = sorted(
+            [
+                result
+                for tier in leads.tiers
+                if tier.priority == 1
+                for query_results in tier.results
+                for result in query_results.results.results
+            ],
+            key=lambda x: x.score,
+            reverse=True,
+        )
+        top_leads_data = [
+            {
+                "title": lead.title,
+                "url": lead.url,
+                "content": lead.content,
+                "score": lead.score,
+            }
+            for lead in top_leads[:50]
+        ]
 
-        with logfire.span("Enriching leads") as span:
-            enriched_leads: Leads = await ctx.run_typed(
-                "Enriching leads",
-                lead_enrichment_call,
-                RunOptions(max_attempts=3, type_hint=Leads),
-                leads=leads,
-                company=company,
+        dynamic_instructions = generate_lead_scoring_instructions(company)
+
+        scoring_agent = Agent(
+            "openai:gpt-4.1",
+            instructions=dynamic_instructions,
+            output_type=TopLeads,
+            retries=2,
+        )
+        scoring_agent_restate_agent = RestateAgent(scoring_agent, restate_context=ctx)
+
+        async def scoring_agent_call(prompt_text: str) -> str:
+            result = await scoring_agent_restate_agent.run(prompt_text)
+            return result.output
+
+        with logfire.span("Scoring top leads") as span:
+            scored_leads: TopLeads = await ctx.run_typed(
+                "Generating scoring instructions",
+                scoring_agent_call,
+                RunOptions(max_attempts=3, type_hint=TopLeads),
+                prompt_text=json.dumps(top_leads_data, indent=2),
             )
+        with logfire.span("Saving scored leads") as span:
+            with open("scored_leads.json", "w", encoding="utf-8") as f:
+                json.dump(scored_leads.model_dump(), f, indent=2)
 
-        with logfire.span("Saving enriched leads") as span:
-            with open("enriched_leads.json", "w", encoding="utf-8") as f:
-                json.dump(enriched_leads.model_dump(), f, indent=2)
+        return scored_leads.model_dump()
 
-        return enriched_leads.model_dump()
+        # async def lead_enrichment_call(leads: Leads, company: Company):
+        #     with logfire.span("Company context") as span:
+        #         logfire.info(company.company_name)
+        #         logfire.info(company.what_we_do)
+        #         logfire.info(company.target_market)
+        #     return leads
+
+        # with logfire.span("Enriching leads") as span:
+        #     enriched_leads: Leads = await ctx.run_typed(
+        #         "Enriching leads",
+        #         lead_enrichment_call,
+        #         RunOptions(max_attempts=3, type_hint=Leads),
+        #         leads=leads,
+        #         company=company,
+        #     )
+
+        # with logfire.span("Saving enriched leads") as span:
+        #     with open("enriched_leads.json", "w", encoding="utf-8") as f:
+        #         json.dump(enriched_leads.model_dump(), f, indent=2)
+
+        # return enriched_leads.model_dump()
