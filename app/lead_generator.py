@@ -17,6 +17,7 @@ from app.system_prompts.lead_generator import (
     structured_instructions,
     unstructured_instructions,
     generate_lead_scoring_instructions,
+    generate_outreach_content_instructions,
 )
 
 load_dotenv()
@@ -179,11 +180,11 @@ async def run_lead_generator(ctx: restate.Context, company: Company) -> str:
             )
         ]
 
-        dynamic_instructions = generate_lead_scoring_instructions(company)
+        scoring_instructions = generate_lead_scoring_instructions(company)
 
         scoring_agent = Agent[None, TopLeads](
             "openai:gpt-4.1",
-            instructions=dynamic_instructions,
+            instructions=scoring_instructions,
             output_type=TopLeads,
             retries=2,
         )

@@ -125,27 +125,25 @@ Remember: These leads will receive personalized outreach from {company.company_n
 """
 
 
-def generate_outreach_content_instructions(
-    company_name: str, what_we_do: str, target_market: str
-) -> str:
+def generate_outreach_content_instructions(company: Company) -> str:
     """
     Dynamically generate outreach content instructions based on the company's specific context.
     """
 
     return f"""
-You’re an outreach specialist helping {company_name} connect with the right people on LinkedIn.
+You’re an outreach specialist helping {company.company_name} connect with the right people on LinkedIn.
 
 **COMPANY SNAPSHOT:**
-- Company: {company_name}
-- What We Do: {what_we_do}
-- Who We Serve: {target_market}
+- Company: {company.company_name}
+- What We Do: {company.what_we_do}
+- Who We Serve: {company.target_market}
 
 **YOUR ROLE:**
 Write short, personal LinkedIn messages for the top 10 leads. Each one should be 2–3 sentences, no longer.
 
 **WHAT TO INCLUDE:**
 1. **Personal Touch** – Mention something tied to their role, company, or challenges.  
-2. **Value Connection** – Show how {what_we_do} could make their work easier, better, or more effective.  
+2. **Value Connection** – Show how {company.what_we_do} could make their work easier, better, or more effective.  
 3. **Clear Purpose** – Make it obvious why you’re reaching out.  
 4. **Tone** – Professional, approachable, and human (not stiff or overly formal).  
 5. **Next Step** – End with a light invitation (e.g. “open to a quick chat?”).  
