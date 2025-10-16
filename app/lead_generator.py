@@ -12,7 +12,12 @@ import restate
 
 from app.schemas.lead_generator import Company
 from app.restate import RestateAgent
-from app.schemas.lead_generator import LinkedInLeadQueries, TavilyResponse, TopLeads
+from app.schemas.lead_generator import (
+    LinkedInLeadQueries,
+    TavilyResponse,
+    TopLeads,
+    TopLeadsWithMessaging,
+)
 from app.system_prompts.lead_generator import (
     structured_instructions,
     unstructured_instructions,
@@ -156,7 +161,7 @@ async def run_lead_generator(ctx: restate.Context, company: Company) -> str:
                 RunOptions(max_attempts=3, type_hint=Leads),
                 structured_output,
             )
-        with logfire.span("Saving results") as span:
+        with logfire.span("Saving leads") as span:
             with open("leads.json", "w", encoding="utf-8") as f:
                 json.dump(leads.model_dump(), f, indent=2)
 
@@ -207,26 +212,31 @@ async def run_lead_generator(ctx: restate.Context, company: Company) -> str:
             with open("scored_leads.json", "w", encoding="utf-8") as f:
                 json.dump(scored_leads.model_dump(), f, indent=2)
 
-        return scored_leads.model_dump()
+        outreach_instructions = generate_outreach_content_instructions(company)
 
-        # async def lead_enrichment_call(leads: Leads, company: Company):
-        #     with logfire.span("Company context") as span:
-        #         logfire.info(company.company_name)
-        #         logfire.info(company.what_we_do)
-        #         logfire.info(company.target_market)
-        #     return leads
+        outreach_agent = Agent[None, TopLeadsWithMessaging](
+            "openai:gpt-4.1",
+            instructions=outreach_instructions,
+            output_type=TopLeadsWithMessaging,
+            retries=2,
+        )
+        outreach_restate_agent = RestateAgent[None, TopLeadsWithMessaging](
+            outreach_agent, restate_context=ctx
+        )
 
-        # with logfire.span("Enriching leads") as span:
-        #     enriched_leads: Leads = await ctx.run_typed(
-        #         "Enriching leads",
-        #         lead_enrichment_call,
-        #         RunOptions(max_attempts=3, type_hint=Leads),
-        #         leads=leads,
-        #         company=company,
-        #     )
+        async def outreach_agent_call(prompt_text: str) -> TopLeadsWithMessaging:
+            result = await outreach_restate_agent.run(prompt_text)
+            return result.output
 
-        # with logfire.span("Saving enriched leads") as span:
-        #     with open("enriched_leads.json", "w", encoding="utf-8") as f:
-        #         json.dump(enriched_leads.model_dump(), f, indent=2)
+        with logfire.span("Enriching top leads") as span:
+            enriched_leads: TopLeadsWithMessaging = await ctx.run_typed(
+                "Enriching top leads",
+                outreach_agent_call,
+                RunOptions(max_attempts=3, type_hint=TopLeadsWithMessaging),
+                prompt_text=json.dumps(scored_leads.model_dump(), indent=2),
+            )
+        with logfire.span("Saving enriched leads") as span:
+            with open("enriched_leads.json", "w", encoding="utf-8") as f:
+                json.dump(enriched_leads.model_dump(), f, indent=2)
 
-        # return enriched_leads.model_dump()
+        return enriched_leads.model_dump()
