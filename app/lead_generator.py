@@ -159,38 +159,39 @@ async def run_lead_generator(ctx: restate.Context, company: Company) -> str:
             with open("leads.json", "w", encoding="utf-8") as f:
                 json.dump(leads.model_dump(), f, indent=2)
 
-        top_leads = sorted(
-            [
-                result
-                for tier in leads.tiers
-                if tier.priority == 1
-                for query_results in tier.results
-                for result in query_results.results.results
-            ],
-            key=lambda x: x.score,
-            reverse=True,
-        )
-        top_leads_data = [
+        top_leads = [
             {
                 "title": lead.title,
                 "url": lead.url,
                 "content": lead.content,
                 "score": lead.score,
             }
-            for lead in top_leads[:50]
+            for lead in sorted(
+                (
+                    result
+                    for tier in leads.tiers
+                    if tier.priority == 1
+                    for query_results in tier.results
+                    for result in query_results.results.results
+                ),
+                key=lambda x: x.score,
+                reverse=True,
+            )
         ]
 
         dynamic_instructions = generate_lead_scoring_instructions(company)
 
-        scoring_agent = Agent(
+        scoring_agent = Agent[None, TopLeads](
             "openai:gpt-4.1",
             instructions=dynamic_instructions,
             output_type=TopLeads,
             retries=2,
         )
-        scoring_agent_restate_agent = RestateAgent(scoring_agent, restate_context=ctx)
+        scoring_agent_restate_agent = RestateAgent[None, TopLeads](
+            scoring_agent, restate_context=ctx
+        )
 
-        async def scoring_agent_call(prompt_text: str) -> str:
+        async def scoring_agent_call(prompt_text: str) -> TopLeads:
             result = await scoring_agent_restate_agent.run(prompt_text)
             return result.output
 
@@ -199,7 +200,7 @@ async def run_lead_generator(ctx: restate.Context, company: Company) -> str:
                 "Generating scoring instructions",
                 scoring_agent_call,
                 RunOptions(max_attempts=3, type_hint=TopLeads),
-                prompt_text=json.dumps(top_leads_data, indent=2),
+                prompt_text=json.dumps(top_leads, indent=2),
             )
         with logfire.span("Saving scored leads") as span:
             with open("scored_leads.json", "w", encoding="utf-8") as f:
