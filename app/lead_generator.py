@@ -63,19 +63,13 @@ class Company(BaseModel):
     target_market: str = target_market
 
 
-class Prompt(BaseModel):
-    prompt: str = example_prompt
-
-
-class LeadGeneratorInput(BaseModel):
-    prompt: Prompt
-    company: Company
-
-
 @lead_generator_service.handler()
-async def run_lead_generator(ctx: restate.Context, input: LeadGeneratorInput) -> str:
-    prompt = input.prompt
-    company = input.company
+async def run_lead_generator(ctx: restate.Context, company: Company) -> str:
+    prompt = f"""
+    "company_name": "{company.company_name}"
+    "what_we_do": "{company.what_we_do}"
+    "target_market": "{company.target_market}"
+    """
     with logfire.span("Generating leads") as span:
 
         unstructured_leads_agent = Agent(
@@ -111,7 +105,7 @@ async def run_lead_generator(ctx: restate.Context, input: LeadGeneratorInput) ->
                 "Freeform leads generator",
                 unstructured_agent_call,
                 RunOptions(max_attempts=3, type_hint=str),
-                prompt_text=prompt.prompt,
+                prompt_text=prompt,
             )
         with logfire.span("Generating Structured Query Config") as span:
             structured_output: LinkedInLeadQueries = await ctx.run_typed(
@@ -186,7 +180,7 @@ async def run_lead_generator(ctx: restate.Context, input: LeadGeneratorInput) ->
             return leads
 
         with logfire.span("Enriching leads") as span:
-            enriched_leads = await ctx.run_typed(
+            enriched_leads: Leads = await ctx.run_typed(
                 "Enriching leads",
                 lead_enrichment_call,
                 RunOptions(max_attempts=3, type_hint=Leads),
