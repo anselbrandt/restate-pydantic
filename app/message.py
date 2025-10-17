@@ -22,8 +22,11 @@ def send_reminder(message_id: str, name: str):
     print(f"Reminder sent: {message_id}")
 
 
+example_recipient = "Alice"
+
+
 class MessageRequest(BaseModel):
-    name: str
+    name: str = example_recipient
 
 
 class Message(BaseModel):
