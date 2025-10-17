@@ -1,19 +1,17 @@
-from dataclasses import dataclass
-from datetime import datetime, date
-from typing import Optional, List
 import os
+from dataclasses import dataclass
+from datetime import date
+from typing import List, Optional
 
-
+import logfire
+import restate
 from dotenv import load_dotenv
 from pydantic import BaseModel, Field
 from pydantic_ai import Agent, RunContext
 from restate import Context, RunOptions
 from tavily import AsyncTavilyClient
-import logfire
-import restate
 
 from app.restate import RestateAgent
-
 
 load_dotenv()
 

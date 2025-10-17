@@ -1,10 +1,9 @@
 import restate
-from pydantic_ai import Agent
 from pydantic import BaseModel
+from pydantic_ai import Agent
 from restate import RunOptions
 
 from app.restate import RestateAgent
-
 
 call_chaining_svc_typed = restate.Service("Call_Chaining_Service_Typed")
 

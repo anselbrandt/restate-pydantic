@@ -2,9 +2,7 @@ from __future__ import annotations
 
 from collections.abc import Iterator, Sequence
 from contextlib import contextmanager
-from typing import Any, Never, cast, overload
-
-from restate import Context, TerminalError
+from typing import Any, cast, overload
 
 from pydantic_ai import models
 from pydantic_ai._run_context import AgentDepsT
@@ -19,6 +17,8 @@ from pydantic_ai.tools import DeferredToolResults
 from pydantic_ai.toolsets.abstract import AbstractToolset
 from pydantic_ai.toolsets.function import FunctionToolset
 from pydantic_ai.usage import RunUsage, UsageLimits
+
+from restate import Context, TerminalError
 
 from ._model import RestateModelWrapper
 from ._toolset import RestateContextRunToolset

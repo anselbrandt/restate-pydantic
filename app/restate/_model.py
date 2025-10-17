@@ -1,13 +1,11 @@
 from typing import Any
 
-from restate import Context, RunOptions
-
 from pydantic_ai.messages import ModelResponse
 from pydantic_ai.models import Model
 from pydantic_ai.models.wrapper import WrapperModel
 
 from app.restate._serde import PydanticTypeAdapter
-
+from restate import Context, RunOptions
 
 MODEL_RESPONSE_SERDE = PydanticTypeAdapter(ModelResponse)
 

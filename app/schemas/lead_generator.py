@@ -1,12 +1,11 @@
-from typing import List, Optional, Dict, Any
-
+from typing import Any, Dict, List, Optional
 
 from pydantic import BaseModel, Field
 
 from app.data.example_prompt import (
     company_name,
-    what_we_do,
     target_market,
+    what_we_do,
 )
 
 

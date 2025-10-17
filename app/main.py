@@ -1,8 +1,9 @@
-from dotenv import load_dotenv
-from hypercorn.asyncio import serve
 import asyncio
+
 import hypercorn
 import restate
+from dotenv import load_dotenv
+from hypercorn.asyncio import serve
 
 from app.chaining import call_chaining_svc
 from app.chaining_typed import call_chaining_svc_typed
@@ -11,7 +12,6 @@ from app.message import message_service
 from app.search import search_service
 from app.weather import weather_service
 from app.weather_advanced import weather_service_advanced
-
 
 load_dotenv()
 

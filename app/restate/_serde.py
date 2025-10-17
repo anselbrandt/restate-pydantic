@@ -1,6 +1,7 @@
 import typing
 
 from pydantic import TypeAdapter
+
 from restate.serde import Serde
 
 T = typing.TypeVar("T")

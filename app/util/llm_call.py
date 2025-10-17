@@ -1,9 +1,9 @@
-from typing import Optional, List
+from typing import List, Optional
 
+import logfire
 from dotenv import load_dotenv
 from pydantic_ai import Agent, FunctionToolset
 from restate import TerminalError
-import logfire
 
 load_dotenv()
 

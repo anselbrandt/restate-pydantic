@@ -1,28 +1,28 @@
-from typing import List
 import json
 import os
+from typing import List
 
+import logfire
+import restate
 from dotenv import load_dotenv
 from pydantic import BaseModel
 from pydantic_ai import Agent
 from restate import RunOptions
 from tavily import AsyncTavilyClient
-import logfire
-import restate
 
-from app.schemas.lead_generator import Company
 from app.restate import RestateAgent
 from app.schemas.lead_generator import (
+    Company,
     LinkedInLeadQueries,
     TavilyResponse,
     TopLeads,
     TopLeadsWithMessaging,
 )
 from app.system_prompts.lead_generator import (
-    structured_instructions,
-    unstructured_instructions,
     generate_lead_scoring_instructions,
     generate_outreach_content_instructions,
+    structured_instructions,
+    unstructured_instructions,
 )
 
 load_dotenv()
@@ -64,7 +64,6 @@ async def run_lead_generator(ctx: restate.Context, company: Company) -> str:
     "target_market": "{company.target_market}"
     """
     with logfire.span("Generating leads") as span:
-
         unstructured_leads_agent = Agent(
             "openai:gpt-4.1",
             instructions=unstructured_instructions,

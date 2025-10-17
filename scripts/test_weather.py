@@ -106,7 +106,7 @@ async def fetch_weather(coords: LatLng):
             8000: "Thunderstorm",
         }
         return {
-            "temperature": f'{values["temperatureApparent"]}°C',
+            "temperature": f"{values['temperatureApparent']}°C",
             "description": code_lookup.get(values["weatherCode"], "Unknown"),
         }
 

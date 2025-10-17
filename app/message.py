@@ -1,9 +1,9 @@
-from datetime import timedelta
 import random
+from datetime import timedelta
 
+import restate
 from pydantic import BaseModel
 from restate import RunOptions
-import restate
 
 
 def send_notification(message_id: str, name: str):

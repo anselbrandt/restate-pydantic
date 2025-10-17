@@ -4,8 +4,6 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Any, Literal
 
-from restate import Context, RunOptions, TerminalError
-
 from pydantic_ai import ToolDefinition
 from pydantic_ai._run_context import AgentDepsT
 from pydantic_ai.exceptions import ApprovalRequired, CallDeferred, ModelRetry, UserError
@@ -13,6 +11,8 @@ from pydantic_ai.mcp import MCPServer, ToolResult
 from pydantic_ai.tools import RunContext
 from pydantic_ai.toolsets.abstract import AbstractToolset, ToolsetTool
 from pydantic_ai.toolsets.wrapper import WrapperToolset
+
+from restate import Context, RunOptions, TerminalError
 
 from ._serde import PydanticTypeAdapter
 

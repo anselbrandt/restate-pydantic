@@ -5,7 +5,7 @@ import os
 from dotenv import load_dotenv
 from tavily import AsyncTavilyClient
 
-from app.schemas.lead_generator import LinkedInLeadQueries, TavilyResponse, SearchQuery
+from app.schemas.lead_generator import LinkedInLeadQueries, SearchQuery, TavilyResponse
 
 load_dotenv()
 

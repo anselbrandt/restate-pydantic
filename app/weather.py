@@ -1,18 +1,16 @@
-from dataclasses import dataclass
-from typing import Any
 import os
 import urllib.parse
+from dataclasses import dataclass
+from typing import Any
 
-
+import logfire
 from dotenv import load_dotenv
 from httpx import AsyncClient
 from pydantic import BaseModel
-from pydantic_ai import Agent, RunContext, ModelRetry
-from restate import Service, Context
-import logfire
+from pydantic_ai import Agent, ModelRetry, RunContext
+from restate import Context, Service
 
 from app.restate import RestateAgent
-
 
 load_dotenv()
 
@@ -116,7 +114,7 @@ async def get_weather(ctx: RunContext[Deps], lat: float, lng: float) -> dict[str
         8000: "Thunderstorm",
     }
     return {
-        "temperature": f'{values["temperatureApparent"]}°C',
+        "temperature": f"{values['temperatureApparent']}°C",
         "description": code_lookup.get(values["weatherCode"], "Unknown"),
     }
 
